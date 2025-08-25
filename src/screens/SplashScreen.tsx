@@ -8,9 +8,19 @@ const SplashScreen = ({ navigation }: any) => {
   return (
     <Layout style={styles.container}>
       <StatusBar barStyle="dark-content" />
+      <View pointerEvents="none" style={styles.blobs}>
+        <View style={styles.blobTopLeft} />
+        <View style={styles.blobBottomRight} />
+      </View>
       <View style={styles.centerArea}>
         <View style={styles.welcome}>
-          <LottieView style={{ flex: 1 }} source={require('../assets/images/cube.json')} autoPlay loop />
+          <LottieView
+            style={styles.lottie}
+            source={require('../assets/images/cube.json')}
+            autoPlay
+            loop
+            resizeMode="contain"
+          />
         </View>
         <Text category="h4" style={styles.title}>Creative Space Lab</Text>
         <Text appearance="hint" style={styles.tagline}>Explore. Create. Inspire.</Text>
@@ -29,6 +39,32 @@ const SplashScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F5F5F5',
+  },
+  blobs: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  blobTopLeft: {
+    position: 'absolute',
+    top: -120,
+    left: -80,
+    width: 260,
+    height: 260,
+    backgroundColor: '#FFBF1B',
+    borderRadius: 180,
+    opacity: 0.25,
+    transform: [{ rotate: '15deg' }, { scaleX: 1.3 }],
+  },
+  blobBottomRight: {
+    position: 'absolute',
+    bottom: -140,
+    right: -100,
+    width: 320,
+    height: 320,
+    backgroundColor: '#FFBF1B',
+    borderRadius: 200,
+    opacity: 0.2,
+    transform: [{ rotate: '-12deg' }, { scaleX: 1.2 }],
   },
   centerArea: {
     flex: 1,
@@ -52,11 +88,18 @@ const styles = StyleSheet.create({
   },
   ctaButton: {
     width: '100%',
+    borderRadius: 12,
   },
   welcome: {
-    height: 200,
+    width: '70%',
+    maxWidth: 360,
     aspectRatio: 1,
-  }
+    overflow: 'visible',
+  },
+  lottie: {
+    width: '100%',
+    height: '100%',
+  },
 });
 
 export default SplashScreen;
