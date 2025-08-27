@@ -4,6 +4,7 @@ import { Button, Layout, Text } from '@ui-kitten/components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
 import APP_VERSION from '../config/env';
+import ShadowButton from '../components/common/ShadowButton';
 
 const SplashScreen = ({ navigation }: any) => {
   return (
@@ -38,13 +39,13 @@ const SplashScreen = ({ navigation }: any) => {
       </View>
       <SafeAreaView edges={["bottom"]}>
         <View style={styles.bottomArea}>
-            <Button
-              size="large"
-              style={styles.ctaButton}
-              onPress={() => navigation.navigate('Next')}
-            >
-              Mulai
-            </Button>
+          <ShadowButton
+            size="large"
+            containerStyle={styles.ctaButton}
+            onPress={() => navigation.navigate('Login')}
+          >
+            Mulai
+          </ShadowButton>
         </View>
       </SafeAreaView>
     </Layout>
@@ -111,13 +112,6 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 15,
     marginBottom: 40,
-    // iOS shadow (supports colored shadow)
-    shadowColor: '#FFBF1B',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.45,
-    shadowRadius: 20,
-    // Android shadow (uses elevation; color is not customizable)
-    elevation: 12,
   },
   welcome: {
     width: '70%',
