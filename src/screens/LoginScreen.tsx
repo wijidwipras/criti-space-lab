@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Image, KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
+import { Image, KeyboardAvoidingView, Platform, StyleSheet, View, Pressable } from 'react-native';
 import { Layout, Text, Input } from '@ui-kitten/components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ShadowButton from '../components/common/ShadowButton';
+import { EnvelopeIcon, LockClosedIcon, EyeIcon, EyeSlashIcon } from 'react-native-heroicons/outline';
 
 const LoginScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const onLogin = () => {
     // TODO: wire authentication
@@ -35,19 +37,32 @@ const LoginScreen = ({ navigation }: any) => {
             </Text>
 
             <Input
+              size="large"
               style={styles.input}
               placeholder="Email"
               keyboardType="email-address"
               autoCapitalize="none"
               value={email}
               onChangeText={setEmail}
+              accessoryLeft={() => <EnvelopeIcon size={22} color="#8F9BB3" />}
             />
             <Input
+              size="large"
               style={styles.input}
               placeholder="Password"
-              secureTextEntry
+              secureTextEntry={!showPassword}
               value={password}
               onChangeText={setPassword}
+              accessoryLeft={() => <LockClosedIcon size={22} color="#8F9BB3" />}
+              accessoryRight={() => (
+                <Pressable onPress={() => setShowPassword(v => !v)} hitSlop={10}>
+                  {showPassword ? (
+                    <EyeSlashIcon size={22} color="#8F9BB3" />
+                  ) : (
+                    <EyeIcon size={22} color="#8F9BB3" />
+                  )}
+                </Pressable>
+              )}
             />
 
             <ShadowButton size="large" onPress={onLogin}>
@@ -75,9 +90,12 @@ const styles = StyleSheet.create({
   content: { flex: 1, paddingHorizontal: 24, justifyContent: 'center' },
   title: { marginBottom: 6 },
   subtitle: { marginBottom: 24 },
-  input: { marginBottom: 16 },
+  input: {
+    marginBottom: 16,
+    borderRadius: 15,
+    width: '100%',
+  },
   footer: { paddingHorizontal: 24, paddingVertical: 16 },
 });
 
 export default LoginScreen;
-
