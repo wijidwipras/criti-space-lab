@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React, { useState } from 'react';
 import { Image, KeyboardAvoidingView, Platform, StyleSheet, View, Pressable } from 'react-native';
 import { Layout, Text, Input } from '@ui-kitten/components';
@@ -12,7 +13,7 @@ const LoginScreen = ({ navigation }: any) => {
 
   const onLogin = () => {
     // TODO: wire authentication
-    navigation.navigate('Next');
+    navigation.navigate('MainTabs');
   };
 
   return (
@@ -31,7 +32,7 @@ const LoginScreen = ({ navigation }: any) => {
           </View>
 
           <View style={styles.content}>
-            <Text category="h3" style={styles.title}>Hai</Text>
+            <Text category="h3" style={styles.title}>Hai !</Text>
             <Text appearance="hint" style={styles.subtitle}>
               Masuk untuk melanjutkan eksplorasi ruang kreatif Anda.
             </Text>
@@ -71,7 +72,7 @@ const LoginScreen = ({ navigation }: any) => {
           </View>
 
           <View style={styles.footer}>
-            <Text appearance="hint">
+            <Text appearance="hint" style={styles.footerText}>
               Dengan masuk, Anda menyetujui ketentuan penggunaan dan kebijakan privasi.
             </Text>
           </View>
@@ -85,17 +86,31 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#FFFFFF' },
   safe: { flex: 1 },
   kav: { flex: 1 },
-  header: { paddingHorizontal: 24, paddingTop: 8, paddingBottom: 8 },
+  header: { paddingHorizontal: 8, paddingTop: 32, paddingBottom: 8 },
   headerLogo: { height: 28, width: 120 },
   content: { flex: 1, paddingHorizontal: 24, justifyContent: 'center' },
-  title: { marginBottom: 6 },
-  subtitle: { marginBottom: 24 },
+  title: {
+    marginBottom: 6,
+    textAlign: 'center',
+    color: '#FFBF1B',
+  },
+  subtitle: {
+    marginBottom: 24,
+    textAlign: 'center',
+  },
   input: {
     marginBottom: 16,
     borderRadius: 15,
     width: '100%',
   },
-  footer: { paddingHorizontal: 24, paddingVertical: 16 },
+  footer: {
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+  },
+  footerText: {
+    textAlign: 'center',
+    fontSize: 12,
+  },
 });
 
 export default LoginScreen;
