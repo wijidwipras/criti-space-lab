@@ -96,9 +96,9 @@ const HomeScreen = ({ navigation }: any) => {
           {status === 'data' && (
             <View style={styles.grid}>
               <FeatureCard
-                title="Explolre in AR"
+                title="Explore in AR"
                 image={require('../assets/images/explore-in-ar.png')}
-                onPress={() => navigation.navigate('Next')}
+                onPress={() => navigation.navigate('ExploreInAr')}
                 cardStyle={{ backgroundColor: '#f5faf4', borderRadius: 23, height: 191 }}
                 backgroundSource={require('../assets/images/explore-in-ar-bg.png')}
               />

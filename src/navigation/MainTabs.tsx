@@ -6,8 +6,14 @@ import HelpScreen from '../screens/HelpScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import { HomeIcon, QuestionMarkCircleIcon, UserIcon } from 'react-native-heroicons/outline';
 
-const MainTabs = ({ navigation }: any) => {
+const MainTabs = ({ navigation, route }: any) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  React.useEffect(() => {
+    if (route?.params?.tab !== undefined && typeof route.params.tab === 'number') {
+      setSelectedIndex(route.params.tab);
+    }
+  }, [route?.params?.tab]);
 
   const renderContent = () => {
     switch (selectedIndex) {

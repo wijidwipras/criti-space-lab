@@ -5,6 +5,7 @@ import SplashScreen from '../screens/SplashScreen';
 import NextScreen from '../screens/NextScreen';
 import MainTabs from './MainTabs';
 import LoginScreen from '../screens/LoginScreen';
+import ExploreInArScreen from '../screens/ExploreInArScreen';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ const AppNavigator = () => {
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
         <Stack.Screen name="Next" component={NextScreen} options={{ title: 'Next Screen' }} />
+        <Stack.Screen name="ExploreInAr" component={ExploreInArScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
