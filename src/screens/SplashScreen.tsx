@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, StatusBar, Image } from 'react-native';
-import { Button, Layout, Text } from '@ui-kitten/components';
+import { Layout, Text } from '@ui-kitten/components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
 import APP_VERSION from '../config/env';

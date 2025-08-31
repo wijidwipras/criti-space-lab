@@ -42,7 +42,7 @@ const ArSceneWeb: React.FC<Props> = ({ modelKey }) => {
   }, [scale, rotation, translate]);
 
   // Resolve local asset URI for selected model
-  const modelUri = useMemo(() => {
+  const model = useMemo(() => {
     try {
       const { MODEL_REGISTRY } = require('../../assets/models');
       const asset = MODEL_REGISTRY?.[modelKey as any];
@@ -50,19 +50,22 @@ const ArSceneWeb: React.FC<Props> = ({ modelKey }) => {
         const src = (Image as any).resolveAssetSource
           ? (Image as any).resolveAssetSource(asset)
           : null;
-        return src?.uri || null;
+        const uri = src?.uri || null;
+        // Heuristic: pick format from filename extension
+        const format = typeof src?.uri === 'string' && src.uri.toLowerCase().endsWith('.glb') ? 'glb' : 'obj';
+        return { uri, format } as { uri: string | null; format: 'glb' | 'obj' };
       }
     } catch (e) {}
-    return null;
+    return { uri: null, format: 'obj' as const };
   }, [modelKey]);
 
   // Notify WebView to load model when modelUri changes
   useEffect(() => {
-    if (modelUri && webRef.current) {
-      const msg = JSON.stringify({ type: 'loadModel', payload: { uri: modelUri, format: 'obj' } });
+    if (model?.uri && webRef.current) {
+      const msg = JSON.stringify({ type: 'loadModel', payload: { uri: model.uri, format: model.format } });
       webRef.current.postMessage(msg);
     }
-  }, [modelUri]);
+  }, [model]);
 
   const html = useMemo(() => {
     // Basic Three.js scene with transparent background
@@ -77,8 +80,10 @@ const ArSceneWeb: React.FC<Props> = ({ modelKey }) => {
     </style>
   </head>
   <body>
+    <!-- NOTE: CDN used for development; inline/local fallback can replace these later. -->
     <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
     <script src="https://unpkg.com/three@0.158.0/examples/js/loaders/OBJLoader.js"></script>
+    <script src="https://unpkg.com/three@0.158.0/examples/js/loaders/GLTFLoader.js"></script>
     <script>
       (function () {
         const DPR = Math.min(2, window.devicePixelRatio || 1);
@@ -170,6 +175,36 @@ const ArSceneWeb: React.FC<Props> = ({ modelKey }) => {
           }
         }
 
+        function loadGLB(url) {
+          try {
+            const loader = new THREE.GLTFLoader();
+            loader.load(
+              url,
+              function (gltf) {
+                clearGroup();
+                const obj = gltf.scene || gltf.scenes?.[0];
+                if (!obj) return;
+                group.add(obj);
+                // Normalize scale and center
+                const box = new THREE.Box3().setFromObject(obj);
+                const size = new THREE.Vector3();
+                box.getSize(size);
+                const maxDim = Math.max(size.x, size.y, size.z) || 1;
+                const target = 1.2;
+                const s = target / maxDim;
+                obj.scale.setScalar(s);
+                const center = new THREE.Vector3();
+                box.getCenter(center);
+                obj.position.sub(center);
+              },
+              undefined,
+              function (err) {
+                // keep placeholder on failure
+              }
+            );
+          } catch (e) {}
+        }
+
         // Message bridge
         window.document.addEventListener('message', function (e) {
           try {
@@ -177,7 +212,7 @@ const ArSceneWeb: React.FC<Props> = ({ modelKey }) => {
             if (data && data.type === 'transform') {
               applyTransform(data.payload);
             } else if (data && data.type === 'loadModel' && data.payload && data.payload.uri) {
-              loadOBJ(data.payload.uri);
+              if (data.payload.format === 'glb') loadGLB(data.payload.uri); else loadOBJ(data.payload.uri);
             }
           } catch (err) {}
         });
@@ -189,7 +224,7 @@ const ArSceneWeb: React.FC<Props> = ({ modelKey }) => {
             if (data && data.type === 'transform') {
               applyTransform(data.payload);
             } else if (data && data.type === 'loadModel' && data.payload && data.payload.uri) {
-              loadOBJ(data.payload.uri);
+              if (data.payload.format === 'glb') loadGLB(data.payload.uri); else loadOBJ(data.payload.uri);
             }
           } catch (err) {}
         });

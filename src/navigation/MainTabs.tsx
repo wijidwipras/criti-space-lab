@@ -35,9 +35,9 @@ const MainTabs = ({ navigation, route }: any) => {
         selectedIndex={selectedIndex}
         onSelect={index => setSelectedIndex(index)}
       >
-        <BottomNavigationTab title='Home' icon={(props) => <HomeIcon size={22} color={selectedIndex === 0 ? '#FFBF1B' : '#8F9BB3'} />} />
-        <BottomNavigationTab title='Help' icon={(props) => <QuestionMarkCircleIcon size={22} color={selectedIndex === 1 ? '#FFBF1B' : '#8F9BB3'} />} />
-        <BottomNavigationTab title='Profile' icon={(props) => <UserIcon size={22} color={selectedIndex === 2 ? '#FFBF1B' : '#8F9BB3'} />} />
+        <BottomNavigationTab title='Home' icon={() => <HomeIcon size={22} color={selectedIndex === 0 ? '#FFBF1B' : '#8F9BB3'} />} />
+        <BottomNavigationTab title='Help' icon={() => <QuestionMarkCircleIcon size={22} color={selectedIndex === 1 ? '#FFBF1B' : '#8F9BB3'} />} />
+        <BottomNavigationTab title='Profile' icon={() => <UserIcon size={22} color={selectedIndex === 2 ? '#FFBF1B' : '#8F9BB3'} />} />
       </BottomNavigation>
     </Layout>
   );
