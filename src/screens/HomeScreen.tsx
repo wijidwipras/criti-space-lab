@@ -13,6 +13,7 @@ import {
 import { Layout, Text } from '@ui-kitten/components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
+// AR feature removed
 
 const FeatureCard = ({
   title,
@@ -95,13 +96,6 @@ const HomeScreen = ({ navigation }: any) => {
 
           {status === 'data' && (
             <View style={styles.grid}>
-              <FeatureCard
-                title="Explore in AR"
-                image={require('../assets/images/explore-in-ar.png')}
-                onPress={() => navigation.navigate('ExploreInAr')}
-                cardStyle={{ backgroundColor: '#f5faf4', borderRadius: 23, height: 191 }}
-                backgroundSource={require('../assets/images/explore-in-ar-bg.png')}
-              />
               <FeatureCard
                 title="Problem Challenge"
                 image={require('../assets/images/problem-challenge.png')}

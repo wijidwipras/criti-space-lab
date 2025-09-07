@@ -1,40 +1,94 @@
-# Repository Guidelines
+# Panduan Repositori
 
-## Project Structure & Module Organization
-- Source: `src/` with feature folders: `components/`, `screens/`, `navigation/`, `hooks/`, `services/`, `api/`, `utils/`, `state/`, `styles/`, `theme/`, and `assets/` (fonts/images/animations).
-- Entry points: `index.js` (registry) and `App.tsx` (providers + navigation).
-- Tests: `__tests__/` (Jest). Example: `__tests__/App.test.tsx`.
-- Native projects: `android/`, `ios/`. Metro config: `metro.config.js`.
+## Tujuan Agen Saat Ini
+- Slicing UI: fokus pada pemecahan desain menjadi komponen UI reusable, menjaga konsistensi tema (UI Kitten/Eva), dan mencapai kesesuaian visual dengan desain (pixel-perfect) di seluruh layar.
 
-## Build, Test, and Development Commands
-- Start Metro: `npm start` — runs the bundler.
-- Android: `npm run android` — builds and installs on a device/emulator.
-- iOS: `npm run ios` — builds and runs in Simulator (macOS).
-- Tests: `npm test` — runs Jest (preset `react-native`).
-- Lint: `npm run lint` — ESLint over the repo.
-- Format (on demand): `npx prettier --write .`.
-- Link assets (fonts): `npx react-native-asset` (uses `react-native.config.js`).
+## Struktur Proyek & Organisasi Modul
+- Sumber: `src/` dengan folder fitur: `components/`, `screens/`, `navigation/`, `hooks/`, `services/`, `api/`, `utils/`, `state/`, `styles/`, `theme/`, dan `assets/` (font/gambar/animasi).
+- Titik masuk: `index.js` (registri) dan `App.tsx` (providers + navigasi).
+- Test: `__tests__/` (Jest). Contoh: `__tests__/App.test.tsx`.
+- Proyek native: `android/`, `ios/`. Konfigurasi Metro: `metro.config.js`.
 
-## Coding Style & Naming Conventions
-- TypeScript: `.ts`/`.tsx`; 2‑space indentation, single quotes, trailing commas (Prettier config).
-- Linting: extends `@react-native` via `.eslintrc.js`; fix with `npx eslint . --fix`.
-- Components/Screens: PascalCase files (e.g., `NextScreen.tsx`).
-- Hooks: `useX.ts` (camelCase exports). Constants: UPPER_SNAKE_CASE. Utilities: lowerCamelCase.
+## Perintah Build, Test, dan uDevelopment
+- Mulai Metro: `npm start` - menjalankan bundler.
+- Android (utama): `npm run android` - membangun dan memasang di perangkat/emulator.
+- Release Android (APK): `cd android && ./gradlew assembleRelease` (Windows: `gradlew.bat`).
+- Bundle Android (AAB): `cd android && ./gradlew bundleRelease`.
+- iOS (opsional, macOS): `npm run ios` - membangun dan menjalankan di Simulator.
+ 
+- Lint: `npm run lint` - menjalankan ESLint di seluruh repo.
+- Format (sesuai kebutuhan): `npx prettier --write .`.
+- Tautkan aset (font): `npx react-native-asset` (menggunakan `react-native.config.js`).
 
-## Testing Guidelines
-- Framework: Jest with `preset: 'react-native'`.
-- File names: `*.test.ts` or `*.test.tsx` colocated in `__tests__/` or near sources.
-- Run with coverage: `npm test -- --coverage`.
-- Prefer pure functions and testable UI (React Test Renderer examples included).
+## Gaya Kode & Konvensi Penamaan
+- TypeScript: `.ts`/`.tsx`; indentasi 2 spasi, tanda petik tunggal, koma di akhir (konfigurasi Prettier).
+- Linting: mewarisi `@react-native` via `.eslintrc.js`; perbaiki dengan `npx eslint . --fix`.
+- Komponen/Layar: berkas PascalCase (mis., `NextScreen.tsx`).
+- Hooks: `useX.ts` (ekspor camelCase). Konstanta: UPPER_SNAKE_CASE. Utilitas: lowerCamelCase.
 
-## Commit & Pull Request Guidelines
-- Commit style (observed): `[type] short imperative message`, e.g. `[add] splash screen and lottie`, `[setup] project`.
-- Keep commits focused; reference issues in body (e.g., `Fixes #123`).
-- PRs must include: clear summary, screenshots for UI changes, steps to verify, and linked issues.
-- Ensure CI sanity: run `npm run lint` and `npm test` locally before requesting review.
+## Panduan Pengujian
+- Fokus saat ini: verifikasi manual di Android (emulator/perangkat) pada alur utama.
+- Jest/unit test: opsional; tidak diwajibkan pada tahap slicing UI ini.
+- Prioritas: stabilitas di Android, konsistensi visual, dan aksesibilitas dasar.
 
-## Architecture Overview & Tips
-- UI: UI Kitten (`@ui-kitten/components`) with Eva theme; custom theme/mapping in `src/theme/`.
-- Navigation: `@react-navigation/native` + stack in `src/navigation/`.
-- Assets: fonts in `src/assets/fonts` (configured in `react-native.config.js`). Avoid committing secrets; keep environment-specific config out of source.
+## Panduan Commit & Pull Request
+- Gaya commit (yang digunakan): `[type] pesan imperatif singkat`, mis. `[add] splash screen and lottie`, `[setup] project`.
+- Jaga commit tetap fokus; referensikan issue di body (mis., `Fixes #123`).
+- PR harus menyertakan: ringkasan jelas, screenshot untuk perubahan UI, langkah verifikasi, dan tautan ke issue terkait.
+ - Pastikan CI sehat: jalankan `npm run lint` secara lokal sebelum meminta review.
 
+## Gambaran Arsitektur & Tips
+- UI: UI Kitten (`@ui-kitten/components`) dengan tema Eva; tema/pemetaan kustom di `src/theme/`.
+- Navigasi: `@react-navigation/native` + stack di `src/navigation/`.
+- Aset: font di `src/assets/fonts` (dikonfigurasi di `react-native.config.js`). Hindari meng-commit rahasia; simpan konfigurasi spesifik lingkungan di luar sumber.
+# Panduan Repositori
+
+## Tujuan Agen Saat Ini
+- Slicing UI untuk Android: fokus pada pemecahan desain menjadi komponen UI reusable, menjaga konsistensi tema (UI Kitten/Eva), memastikan performa baik di perangkat Android, dan kesesuaian visual (pixel-perfect) lintas densitas layar.
+
+## Target Platform: Android
+- Prasyarat: Android Studio (SDK, Platform-Tools), emulator atau perangkat USB, JDK sesuai versi React Native (umumnya JDK 17).
+- Jalankan debug: `npm run android` - membangun dan memasang ke emulator/perangkat.
+- Build release (APK): `cd android && ./gradlew assembleRelease` (Windows: `gradlew.bat`).
+- Build bundle (AAB): `cd android && ./gradlew bundleRelease` untuk distribusi Play Store.
+- Penandatanganan: atur `signingConfigs` di `android/app/build.gradle` dan simpan keystore di luar VCS (jangan commit rahasia).
+- Opsional performa: aktifkan Hermes dan ProGuard/minify untuk release.
+
+## Struktur Proyek & Organisasi Modul
+- Sumber: `src/` dengan folder fitur: `components/`, `screens/`, `navigation/`, `hooks/`, `services/`, `api/`, `utils/`, `state/`, `styles/`, `theme/`, dan `assets/` (font/gambar/animasi).
+- Titik masuk: `index.js` (registri) dan `App.tsx` (providers + navigasi).
+- Test: `__tests__/` (Jest). Contoh: `__tests__/App.test.tsx`.
+- Proyek native: `android/`, `ios/`. Konfigurasi Metro: `metro.config.js`.
+
+## Perintah Build, Test, dan Development
+- Mulai Metro: `npm start` - menjalankan bundler.
+- Android (utama): `npm run android` - membangun dan memasang di perangkat/emulator.
+- Release Android (APK): `cd android && ./gradlew assembleRelease` (Windows: `gradlew.bat`).
+- Bundle Android (AAB): `cd android && ./gradlew bundleRelease`.
+- iOS (opsional, macOS): `npm run ios` - membangun dan menjalankan di Simulator.
+ 
+- Lint: `npm run lint` - menjalankan ESLint di seluruh repo.
+- Format (sesuai kebutuhan): `npx prettier --write .`.
+- Tautkan aset (font): `npx react-native-asset` (menggunakan `react-native.config.js`).
+
+## Gaya Kode & Konvensi Penamaan
+- TypeScript: `.ts`/`.tsx`; indentasi 2 spasi, tanda petik tunggal, koma di akhir (konfigurasi Prettier).
+- Linting: mewarisi `@react-native` via `.eslintrc.js`; perbaiki dengan `npx eslint . --fix`.
+- Komponen/Layar: berkas PascalCase (mis., `NextScreen.tsx`).
+- Hooks: `useX.ts` (ekspor camelCase). Konstanta: UPPER_SNAKE_CASE. Utilitas: lowerCamelCase.
+
+## Panduan Pengujian
+- Fokus saat ini: verifikasi manual di Android (emulator/perangkat) pada alur utama.
+- Jest/unit test: opsional; tidak diwajibkan pada tahap slicing UI ini.
+- Prioritas: stabilitas di Android, konsistensi visual, dan aksesibilitas dasar.
+
+## Panduan Commit & Pull Request
+- Gaya commit (yang digunakan): `[type] pesan imperatif singkat`, mis. `[add] splash screen and lottie`, `[setup] project`.
+- Jaga commit tetap fokus; referensikan issue di body (mis., `Fixes #123`).
+- PR harus menyertakan: ringkasan jelas, screenshot untuk perubahan UI, langkah verifikasi, dan tautan ke issue terkait.
+ - Pastikan CI sehat: jalankan `npm run lint` secara lokal sebelum meminta review.
+
+## Gambaran Arsitektur & Tips
+- UI: UI Kitten (`@ui-kitten/components`) dengan tema Eva; tema/pemetaan kustom di `src/theme/`.
+- Navigasi: `@react-navigation/native` + stack di `src/navigation/`.
+- Aset: font di `src/assets/fonts` (dikonfigurasi di `react-native.config.js`). Hindari meng-commit rahasia; simpan konfigurasi spesifik lingkungan di luar sumber.
